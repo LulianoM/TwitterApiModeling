@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"apiposterr/src/database"
 	"apiposterr/src/structs"
+
 	"errors"
 	"regexp"
 
@@ -25,6 +27,8 @@ func CreateUser(c *fiber.Ctx) error {
 			"message": "invalid username",
 		})
 	}
+
+	database.DB.Create(&user)
 
 	return c.JSON(user)
 }
