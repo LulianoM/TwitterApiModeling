@@ -1,4 +1,4 @@
-package controllers
+package healtcheck
 
 import (
 	"github.com/gofiber/fiber/v2"

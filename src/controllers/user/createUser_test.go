@@ -1,7 +1,7 @@
-package controllers_test
+package user_test
 
 import (
-	"apiposterr/src/controllers"
+	"apiposterr/src/controllers/user"
 	"apiposterr/src/structs"
 	"testing"
 
@@ -53,7 +53,7 @@ func TestValidateUserNames(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.NameCase, func(t *testing.T) {
-			err := controllers.ValidadeUsername(tc.User)
+			err := user.ValidadeUsername(tc.User)
 			if tc.ExpectError {
 				assert.NotEmpty(t, err, "should not be empty")
 			} else {
