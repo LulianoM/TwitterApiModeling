@@ -2,27 +2,23 @@ package database
 
 import (
 	"apiposterr/src/structs"
-	"log"
 
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-var (
-	DB  *gorm.DB
-	err error
-)
+var DB *gorm.DB
 
-func DatabaseConnection() {
+func Connect() {
+	var err error
 
-	dsn := "host=localhost user=root password=root dbname=root port=5432 sslmode=disable"
+	DB, err = gorm.Open(mysql.Open("root:root@tcp(db:3306)/dbuser"), &gorm.Config{})
 
-	DB, err = gorm.Open(postgres.Open(dsn))
 	if err != nil {
-		log.Panic("Could not connect with the database!")
+		panic("Could not connect with the database!")
 	}
 }
 
-func DatabaseMigration() {
+func AutoMigrate() {
 	DB.AutoMigrate(structs.User{})
 }

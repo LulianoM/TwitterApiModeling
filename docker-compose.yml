@@ -1,22 +1,23 @@
-version: '3'
-
+version: '3.9'
 services:
   backend:
-      build: .
-      ports:
-        - 8000:8000
-      volumes:
-        - .:/app
-      depends_on:
-        - postgresdb
-  
-  postgresdb:
-    image: "postgres"
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root      
+    build: .
     ports:
-      - "5432:5432"
+      - 8000:8000
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data  
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    platform: linux/armd64
+    restart: always
+    environment:
+      MYSQL_DATABASE: dbuser
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 33066:3306

@@ -37,7 +37,7 @@ func validadeUsername(user structs.User) error {
 	if len(user.Username) > 14 {
 		return errors.New("username bigger than 14 characters")
 	}
-	if regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString(user.Username) != true {
+	if !regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString(user.Username) {
 		return errors.New("username does not contain only alphanumeric characters")
 	}
 	return nil
