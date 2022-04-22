@@ -3,3 +3,7 @@ run:
 
 run-docker:
 	docker-compose up
+run-tests:
+	go test -v
+	go test -coverprofile=coverage.out
+	go tool cover -html=c.out -o coverage.html 

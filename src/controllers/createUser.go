@@ -23,7 +23,7 @@ func CreateUser(c *fiber.Ctx) error {
 		DataJoined: time.Now(),
 	}
 
-	if err := validadeUsername(user); err != nil {
+	if err := ValidadeUsername(user); err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"message": "invalid username",
@@ -35,7 +35,7 @@ func CreateUser(c *fiber.Ctx) error {
 	return c.JSON(user)
 }
 
-func validadeUsername(user structs.User) error {
+func ValidadeUsername(user structs.User) error {
 	if len(user.Username) > 14 {
 		return errors.New("username bigger than 14 characters")
 	}
