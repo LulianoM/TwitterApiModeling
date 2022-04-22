@@ -12,4 +12,6 @@ func Setup(app *fiber.App) {
 	api.Get("ping", controllers.Ping)
 
 	api.Post("create", controllers.CreateUser)
+	api.Get("user", controllers.GetUser)
+	api.Get("user/:id", controllers.GetUserByID)
 }
