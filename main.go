@@ -1,6 +1,7 @@
 package main
 
 import (
+	"apiposterr/src/database"
 	"apiposterr/src/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,6 +9,8 @@ import (
 )
 
 func main() {
+	database.Connect()
+	database.AutoMigrate()
 
 	app := fiber.New()
 
