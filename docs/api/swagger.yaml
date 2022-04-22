@@ -1,0 +1,150 @@
+openapi: 3.0.1
+info:
+  title: Posterr API
+  description: API for Posterr backend
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: martinslucianofigueira@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:8000/api
+tags:
+  - name: Healthcheck
+    description: Healthcheck
+  - name: User
+    description: Everything about your Users
+
+paths:
+  /health:
+    get:
+      tags:
+        - Healthcheck
+      summary: Healthcheck
+      description: Healthcheck endpoint
+      operationId: health
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Pong :)
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /user:
+    get:
+      tags:
+      - User
+      summary: get a user
+      description: >
+        get a user account information
+      operationId: createUser
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"                
+    post:
+      tags:
+        - User
+      summary: create a user
+      description: >
+        Create a new user
+      operationId: createUser
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /user{id}:
+    get:
+      tags:
+        - User
+      summary: get a user
+      description: >
+        get a user account information
+      operationId: createUser
+      parameters:
+        - name: id
+          in: path
+          description: must pass the user id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"  
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          format: string
+          description: Username register
+        datajoined:
+          type: string
+          format: datetime
+          description: Username register
+        idaccount:
+          type: string
+          format: uuid
+          description: account id
+    UserCreate:
+      type: object
+      properties:
+        username:
+          type: string
+          format: string
+          description: Username register
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                format: string
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserCreate"
+      description: body to create a new user
+      required: true
+              
