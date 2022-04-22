@@ -19,4 +19,5 @@ func Setup(app *fiber.App) {
 
 	api.Post("post", post.CreateUser)
 	api.Get("post", post.GetPosts)
+	api.Get("post/:id", post.GetPostByID)
 }
