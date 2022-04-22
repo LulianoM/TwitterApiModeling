@@ -3,6 +3,7 @@ module apiposterr
 go 1.16
 
 require (
+	github.com/bxcodec/faker/v3 v3.8.0 // indirect
 	github.com/gofiber/fiber/v2 v2.32.0
 	github.com/stretchr/testify v1.7.1
 	gorm.io/driver/mysql v1.3.3
