@@ -5,8 +5,8 @@ import (
 )
 
 type Post struct {
-	UserID      uint `gorm:"userid"`
-	PostID      uint `gorm:"postid"`
+	UserID      uint
+	PostID      uint `gorm:"id"`
 	DataCreated time.Time
 	ContentText string
 }
