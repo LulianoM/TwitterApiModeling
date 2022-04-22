@@ -3,6 +3,7 @@ package controllers
 import (
 	"apiposterr/src/database"
 	"apiposterr/src/structs"
+	"time"
 
 	"errors"
 	"regexp"
@@ -18,7 +19,8 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	user := structs.User{
-		Username: data["username"],
+		Username:   data["username"],
+		DataJoined: time.Now(),
 	}
 
 	if err := validadeUsername(user); err != nil {

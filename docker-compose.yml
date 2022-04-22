@@ -11,13 +11,10 @@ services:
 
   db:
     image: mysql
-    platform: linux/armd64
     restart: always
     environment:
       MYSQL_DATABASE: dbuser
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - .dbdata:/var/lib/mysql
     ports:
       - 33066:3306
