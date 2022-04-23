@@ -20,5 +20,5 @@ func Connect() {
 }
 
 func AutoMigrate() {
-	DB.AutoMigrate(structs.User{}, structs.Post{})
+	DB.AutoMigrate(structs.User{}, structs.Post{}, structs.Respost{})
 }
