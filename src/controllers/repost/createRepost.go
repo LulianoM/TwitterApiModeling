@@ -1,4 +1,4 @@
-package post
+package repost
 
 import (
 	"apiposterr/src/database"
@@ -10,49 +10,50 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func CreatePost(c *fiber.Ctx) error {
+func CreateRepost(c *fiber.Ctx) error {
 	var data map[string]string
 
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
 
-	post := structs.Post{
+	repost := structs.Respost{
+		PostID:      Strtouint(data["post_id"]),
 		UserID:      Strtouint(data["user_id"]),
 		DataCreated: time.Now(),
-		ContentText: data["text"],
+		RepostText:  data["text"],
 	}
 
-	if err := ValidadePostText(post); err != nil {
+	if err := ValidadePostText(repost); err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"message": "invalid text",
 		})
 	}
 
-	if err := MoreThan5PostForDay(post); err != nil {
+	if err := MoreThan5PostForDay(repost); err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
 			"message": "exceeded the post limit",
 		})
 	}
 
-	database.DB.Create(&post)
+	database.DB.Create(&repost)
 
-	return c.JSON(post)
+	return c.JSON(repost)
 }
 
-func ValidadePostText(post structs.Post) error {
-	if len(post.ContentText) > 777 {
+func ValidadePostText(repost structs.Respost) error {
+	if len(repost.RepostText) > 777 {
 		return errors.New("text bigger than 777 characters")
 	}
 	return nil
 }
 
-func MoreThan5PostForDay(post structs.Post) error {
-	var posts []structs.Post
+func MoreThan5PostForDay(repost structs.Respost) error {
+	var posts []structs.Respost
 
-	database.DB.Where("user_id = ? AND data_created = ?", post.UserID, post.DataCreated).Find(&posts)
+	database.DB.Where("user_id = ? AND data_created = ?", repost.UserID, repost.DataCreated).Find(&posts)
 
 	if len(posts) > 5 {
 		return errors.New("user posted the day's post limit")
