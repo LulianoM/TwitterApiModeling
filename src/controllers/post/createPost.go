@@ -18,9 +18,9 @@ func CreatePost(c *fiber.Ctx) error {
 	}
 
 	post := structs.Post{
-		UserID:      Strtouint(data["user_id"]),
-		DataCreated: time.Now(),
-		ContentText: data["text"],
+		ID:        Strtouint(data["user_id"]),
+		CreatedAt: time.Now(),
+		Text:      data["text"],
 	}
 
 	if err := ValidadePostText(post); err != nil {
@@ -43,20 +43,20 @@ func CreatePost(c *fiber.Ctx) error {
 }
 
 func ValidadePostText(post structs.Post) error {
-	if len(post.ContentText) > 777 {
+	if len(post.Text) > 777 {
 		return errors.New("text bigger than 777 characters")
 	}
 	return nil
 }
 
 func MoreThan5PostForDay(post structs.Post) error {
-	var posts []structs.Post
+	//var posts []structs.Post
 
-	database.DB.Where("user_id = ? AND data_created = ?", post.UserID, post.DataCreated).Find(&posts)
+	//database.DB.Where("user_id = ? AND data_created = ?", post.UserID, post.DataCreated).Find(&posts)
 
-	if len(posts) > 5 {
-		return errors.New("user posted the day's post limit")
-	}
+	//if len(posts) > 5 {
+	//	return errors.New("user posted the day's post limit")
+	//}
 	return nil
 }
 

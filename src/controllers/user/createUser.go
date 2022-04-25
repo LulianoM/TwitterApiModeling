@@ -19,8 +19,8 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	user := structs.User{
-		Username:   data["username"],
-		DataJoined: time.Now(),
+		Username:  data["username"],
+		CreatedAt: time.Now(),
 	}
 
 	if err := ValidadeUsername(user); err != nil {

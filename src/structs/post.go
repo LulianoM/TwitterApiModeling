@@ -1,12 +1,11 @@
 package structs
 
-import (
-	"time"
-)
+import "time"
 
 type Post struct {
-	UserID      uint `gorm:"user_id"`
-	PostID      uint `gorm:"id"`
-	DataCreated time.Time
-	ContentText string
+	ID        uint `gorm:"unique"`
+	User      User `gorm:"foreignKey:ID"`
+	PostID    uint `gorm:"unique"`
+	CreatedAt time.Time
+	Text      string
 }

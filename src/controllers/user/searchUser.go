@@ -9,9 +9,9 @@ import (
 )
 
 func GetUser(c *fiber.Ctx) error {
-	var users []structs.User
-	database.DB.Find(&users)
-	return c.JSON(users)
+	var user []structs.User
+	database.DB.Find(&user)
+	return c.JSON(user)
 }
 
 func GetUserByID(c *fiber.Ctx) error {
