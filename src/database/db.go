@@ -2,23 +2,27 @@ package database
 
 import (
 	"apiposterr/src/structs"
+	"fmt"
+	"log"
+	"os"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+var (
+	DB  *gorm.DB
+	err error
+)
 
 func Connect() {
-	var err error
-
-	DB, err = gorm.Open(mysql.Open("root:root@tcp(db:3306)/dbuser?parseTime=true"), &gorm.Config{})
-
+	stringDeConexao := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable", os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
+	DB, err = gorm.Open(postgres.Open(stringDeConexao))
 	if err != nil {
-		panic("Could not connect with the database!")
+		log.Panic("Erro ao conectar com banco de dados")
 	}
 }
 
 func AutoMigrate() {
-	DB.AutoMigrate(structs.User{}, structs.Post{}, structs.Respost{})
+	DB.AutoMigrate(structs.Post{}, structs.User{})
 }
