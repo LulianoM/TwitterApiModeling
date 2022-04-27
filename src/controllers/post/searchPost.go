@@ -3,9 +3,9 @@ package post
 import (
 	"apiposterr/src/database"
 	"apiposterr/src/structs"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func GetPosts(c *fiber.Ctx) error {
@@ -15,11 +15,14 @@ func GetPosts(c *fiber.Ctx) error {
 }
 
 func GetPostByID(c *fiber.Ctx) error {
-	id, _ := strconv.Atoi(c.Params("id"))
 
 	var post structs.Post
 
-	post.PostID = uint(id)
+	id, err := uuid.Parse(c.Params("id"))
+	if err != nil {
+		return err
+	}
+	post.PostID = id
 
 	database.DB.Find(&post)
 

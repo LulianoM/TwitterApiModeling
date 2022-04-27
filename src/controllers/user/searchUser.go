@@ -3,23 +3,26 @@ package user
 import (
 	"apiposterr/src/database"
 	"apiposterr/src/structs"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func GetUser(c *fiber.Ctx) error {
-	var users []structs.User
-	database.DB.Find(&users)
-	return c.JSON(users)
+	var user []structs.User
+	database.DB.Find(&user)
+	return c.JSON(user)
 }
 
 func GetUserByID(c *fiber.Ctx) error {
-	id, _ := strconv.Atoi(c.Params("id"))
-
 	var user structs.User
 
-	user.ID = uint(id)
+	id, err := uuid.Parse(c.Params("id"))
+	if err != nil {
+		return err
+	}
+
+	user.ID = id
 
 	database.DB.Find(&user)
 
