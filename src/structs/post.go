@@ -1,12 +1,16 @@
 package structs
 
 import (
-	"time"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type Post struct {
-	UserID      uint `gorm:"user_id"`
-	PostID      uint `gorm:"id"`
-	DataCreated time.Time
-	ContentText string
+	gorm.Model
+	ID         uuid.UUID
+	User       *User `gorm:"foreignKey:ID"`
+	PostID     uuid.UUID
+	TextPost   string
+	TextRepost string
+	IsRepost   bool
 }

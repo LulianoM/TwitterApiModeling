@@ -3,12 +3,12 @@ package user
 import (
 	"apiposterr/src/database"
 	"apiposterr/src/structs"
-	"time"
 
 	"errors"
 	"regexp"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func CreateUser(c *fiber.Ctx) error {
@@ -19,8 +19,8 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	user := structs.User{
-		Username:   data["username"],
-		DataJoined: time.Now(),
+		Username: data["username"],
+		ID:       uuid.New(),
 	}
 
 	if err := ValidadeUsername(user); err != nil {
