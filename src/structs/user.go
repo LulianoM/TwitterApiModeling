@@ -2,10 +2,16 @@ package structs
 
 import (
 	"time"
+
+	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type User struct {
-	Username   string `json:"username"`
-	DataJoined time.Time
-	ID         uint `gorm:"id"`
+	gorm.Model
+	ID        uuid.UUID
+	CreatedAt time.Time
+	Username  string
+	Followers []*User `gorm:"many2many:user_followers"`
+	Following []*User `gorm:"many2many:user_following"`
 }
