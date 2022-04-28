@@ -7,8 +7,8 @@ import (
 
 type Post struct {
 	gorm.Model
-	ID         uuid.UUID
-	User       *User `gorm:"foreignKey:ID"`
+	ID uuid.UUID
+	//User       *User `gorm:"foreignKey:ID"`
 	PostID     uuid.UUID
 	TextPost   string
 	TextRepost string

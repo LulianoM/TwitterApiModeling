@@ -15,6 +15,7 @@ func Setup(app *fiber.App) {
 	api.Get("ping", healtcheck.Ping)
 
 	api.Post("create", user.CreateUser)
+	api.Post("/follow", user.FollowUser)
 	admin.Get("user", user.GetUser)
 	admin.Get("user/:id", user.GetUserByID)
 
