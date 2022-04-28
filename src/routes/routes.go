@@ -2,6 +2,7 @@ package routes
 
 import (
 	"apiposterr/src/controllers/healtcheck"
+	"apiposterr/src/controllers/homepage"
 	"apiposterr/src/controllers/post"
 	"apiposterr/src/controllers/user"
 
@@ -22,4 +23,6 @@ func Setup(app *fiber.App) {
 	api.Post("post", post.CreatePost)
 	admin.Get("post", post.GetPosts)
 	admin.Get("post/:id", post.GetPostByID)
+
+	api.Get("homepage", homepage.ShowHomepage)
 }
