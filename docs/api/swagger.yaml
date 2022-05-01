@@ -164,14 +164,14 @@ paths:
         Create a new Post
       operationId: createPost
       requestBody:
-        $ref: "#/components/requestBodies/User"
+        $ref: "#/components/requestBodies/CreatePost"
       responses:
         "200":
           description: Sucesso
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/PostBody"
         default:
           description: Unexpected error
           content:
@@ -283,7 +283,6 @@ components:
           type: string
           format: datetime
           description: Username register
-
     Error:
       type: object
       properties:
@@ -309,5 +308,12 @@ components:
           schema:
             $ref: "#/components/schemas/UserFollow"
       description: body to follow a user
+      required: true
+    CreatePost:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreatePost"
+      description: body to create a post or reply
       required: true
               
