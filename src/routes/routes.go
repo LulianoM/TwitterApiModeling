@@ -16,13 +16,14 @@ func Setup(app *fiber.App) {
 	api.Get("ping", healtcheck.Ping)
 
 	api.Post("create", user.CreateUser)
-	api.Post("/follow", user.FollowUser)
+	api.Post("follow", user.FollowUser)
+	api.Get("profile/:username", user.UserProfile)
 	admin.Get("user", user.GetUser)
 	admin.Get("user/:id", user.GetUserByID)
 
 	api.Post("post", post.CreatePost)
 	admin.Get("post", post.GetPosts)
-	admin.Get("post/:id", post.GetPostByID)
+	admin.Get("post/:id", post.GetPostByPostID)
 
 	api.Get("homepage", homepage.ShowHomepage)
 }

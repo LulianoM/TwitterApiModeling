@@ -14,7 +14,7 @@ func GetPosts(c *fiber.Ctx) error {
 	return c.JSON(posts)
 }
 
-func GetPostByID(c *fiber.Ctx) error {
+func GetPostByPostID(c *fiber.Ctx) error {
 
 	var post structs.Post
 
@@ -27,4 +27,13 @@ func GetPostByID(c *fiber.Ctx) error {
 	database.DB.Find(&post)
 
 	return c.JSON(post)
+}
+
+func GetFeedPostByUserID(UserID uuid.UUID) []structs.Post {
+
+	var posts []structs.Post
+
+	database.DB.Limit(5).Order("created_at").Find(&posts, "ID=?", UserID)
+
+	return posts
 }

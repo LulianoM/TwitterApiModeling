@@ -16,6 +16,10 @@ tags:
     description: Healthcheck
   - name: User
     description: Everything about your Users
+  - name: Post
+    description: Everything about your Users
+  - name: Homepage
+    description: Everything about your Homepage
 
 paths:
   /health:
@@ -78,11 +82,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /user{id}:
+  /user/{id}:
     get:
       tags:
         - User
-      summary: get a user
+      summary: get a user by id
       description: >
         get a user account information
       operationId: createUser
@@ -102,8 +106,78 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/User"  
-
+                  $ref: "#/components/schemas/User"
+  /follow:
+    post:
+      tags:
+        - User
+      summary: follow a user
+      description: >
+        get a user account information
+      operationId: createUser
+      requestBody:
+        $ref: "#/components/requestBodies/FollowUser"
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error" 
+  /userprofile/{username}:
+    get:
+      tags:
+        - User
+      summary: return a userprofile data
+      description: >
+        get a user account information to create userprofile
+      operationId: createUser
+      parameters:
+        - name: id
+          in: path
+          description: must pass the user id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+  /post:
+     post:
+      tags:
+        - Post
+      summary: create a post
+      description: >
+        Create a new Post
+      operationId: createPost
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      responses:
+        "200":
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     User:
@@ -113,14 +187,30 @@ components:
           type: string
           format: string
           description: Username register
-        datajoined:
-          type: string
-          format: datetime
-          description: Username register
-        idaccount:
+        ID:
           type: string
           format: uuid
           description: account id
+        CreatedAt:
+          type: string
+          format: datetime
+          description: Username register
+        UpdatedAt:
+          type: string
+          format: datetime
+          description: Username register
+        DeletedAt:
+          type: string
+          format: datetime
+          description: Username register
+        Followers:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        Following:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
     UserCreate:
       type: object
       properties:
@@ -128,6 +218,72 @@ components:
           type: string
           format: string
           description: Username register
+    UserFollow:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: string
+          description: User id profile
+        user_id_follow:
+          type: string
+          format: string
+          description: User id to follow or following
+        following:
+          type: boolean
+          format: string
+          description: boolean to understand if the person is following or will be followed by user_id
+    CreatePost:
+      type: object
+      properties:
+        user_id:
+          type: string
+          format: string
+          description: User id profile
+        text:
+          type: string
+          format: string
+          description: text post
+        is_repost:
+          type: boolean
+          format: boolean
+          description: if this post is a repost
+    PostBody:
+      type: object
+      properties:
+        ID:
+          type: string
+          format: uuid
+          description: account id
+        PostID:
+          type: string
+          format: uuid
+          description: account id
+        TextPost:
+          type: string
+          format: string
+          description: text post
+        TextRepost:
+          type: string
+          format: string
+          description: text post
+        IsRepost:
+          type: boolean
+          format: boolean
+          description: if this post is a repost
+        CreatedAt:
+          type: string
+          format: datetime
+          description: Username register
+        UpdatedAt:
+          type: string
+          format: datetime
+          description: Username register
+        DeletedAt:
+          type: string
+          format: datetime
+          description: Username register
+
     Error:
       type: object
       properties:
@@ -146,5 +302,12 @@ components:
           schema:
             $ref: "#/components/schemas/UserCreate"
       description: body to create a new user
+      required: true
+    FollowUser:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserFollow"
+      description: body to follow a user
       required: true
               
