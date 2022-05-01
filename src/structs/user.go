@@ -15,3 +15,11 @@ type User struct {
 	Followers []*User `gorm:"many2many:user_followers"`
 	Following []*User `gorm:"many2many:user_following"`
 }
+
+type UserProfile struct {
+	Username        string
+	DataJoined      string
+	FollowingNumber int
+	PostNumber      int
+	PostFeed        []Post
+}

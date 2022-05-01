@@ -28,3 +28,13 @@ func GetUserByID(c *fiber.Ctx) error {
 
 	return c.JSON(user)
 }
+
+func SearchUserByUsername(c *fiber.Ctx) structs.User {
+	var user structs.User
+
+	username := c.Params("username")
+
+	database.DB.Find(&user, "username = ?", username)
+
+	return user
+}
